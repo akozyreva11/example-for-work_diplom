@@ -99,7 +99,7 @@ public class UserController {
                             responseCode = "401",
                             description = "Unauthorized"
                     )
-            }, tags = "Пользователи"
+            }, tags = "Пользовател"
     )
     @PatchMapping("/me")
     public ResponseEntity<UpdateUserDTO> updateUser(@RequestBody UpdateUserDTO update, Authentication authentication) throws Exception {
