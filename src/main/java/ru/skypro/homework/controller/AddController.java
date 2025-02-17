@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,14 @@ import ru.skypro.homework.service.UserService;
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(value = "http://localhost:3000")
+@RestController
 public class AddController {
 
     private final AdService adService;
     private final UserService userService;
     private final AdMapper adMapper;
+
     public AddController(AdService adService, UserService userService, AdMapper adMapper) {
         this.adService = adService;
         this.userService = userService;

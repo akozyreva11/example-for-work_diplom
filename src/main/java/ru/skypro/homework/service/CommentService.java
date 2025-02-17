@@ -2,6 +2,7 @@ package ru.skypro.homework.service;
 
 
 import ru.skypro.homework.dto.CreateOrUpdateCommentDTO;
+import ru.skypro.homework.error.EntityModelNotFoundException;
 import ru.skypro.homework.model.CommentModel;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface CommentService {
      * @param username   - адрес электронной почты пользователя - автора комментария для идентификации его в системе
      * @return созданный комментарий
      */
-    CommentModel createComment(int adId, CreateOrUpdateCommentDTO properties, String username);
+    CommentModel createComment(int adId, CreateOrUpdateCommentDTO properties, String username) throws EntityModelNotFoundException;
 
     /**
      * Находит в базе данных комментарий по его идентификатору

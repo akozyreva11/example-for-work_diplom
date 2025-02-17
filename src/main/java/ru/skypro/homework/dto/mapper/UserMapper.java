@@ -1,10 +1,11 @@
 package ru.skypro.homework.dto.mapper;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.UpdateUserDTO;
 import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.model.UserModel;
+
+import javax.validation.constraints.NotNull;
 
 @Component
 public class UserMapper {

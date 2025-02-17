@@ -1,7 +1,5 @@
 package ru.skypro.homework.dto.mapper;
 
-
-
 import org.springframework.stereotype.Component;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.CommentsDTO;
@@ -10,6 +8,7 @@ import ru.skypro.homework.model.CommentModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Component
 public class CommentMapper {
 

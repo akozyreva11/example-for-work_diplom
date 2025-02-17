@@ -1,5 +1,10 @@
 package ru.skypro.homework.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class ExtendedAdDTO {
     private int pk;
 
@@ -18,10 +23,6 @@ public class ExtendedAdDTO {
     private int price;
 
     private String title;
-
-    public int getPk() {
-        return pk;
-    }
 
     public void setPk(int pk) {
         this.pk = pk;

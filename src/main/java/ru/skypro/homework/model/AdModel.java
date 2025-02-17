@@ -1,8 +1,7 @@
 package ru.skypro.homework.model;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -11,21 +10,22 @@ import java.util.Objects;
 
 
 /**
- * Модель для хранения сущностей "объявление"
+ * Модель для хранения и обработки сущностей "объявление"
  */
-@Getter
-@Setter
+
 @Entity
 @Table(name = "ads")
+
 public class AdModel {
     /**
-     * Идентификатор объявления.
+     * Идентификатор объявления. Генерируется на уровне базы данных.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     /**
      * Ссылка на эндпоинт, по которому доступна загрузка изображения из объявления. Генерируется в процессе обработки
+     * запроса на добавление объявления в методе setImageToAd() в сервисе {@link ru.skypro.homework.service.AdService}
      */
     private String image;
     /**
@@ -60,6 +60,62 @@ public class AdModel {
     public AdModel() {
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<CommentModel> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentModel> comments) {
+        this.comments = comments;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
     public AdModel(Integer price, String title, String description) {
         this.price = price;
         this.title = title;
@@ -77,5 +133,6 @@ public class AdModel {
     public int hashCode() {
         return Objects.hash(id, image, price, title, description, user, comments);
     }
+
 
 }

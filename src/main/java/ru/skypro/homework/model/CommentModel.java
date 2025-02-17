@@ -36,9 +36,8 @@ public class CommentModel {
      * Ссылка на сущность объявления {@link AdModel},к которому привязан комментарий. При удалении из базы данных объявления
      * автоматически удаляются также все связанные с ним комментарии
      */
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.REMOVE)
     @JoinColumn(name = "ad_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private AdModel ad;
     /**
      * Ссылка на сущность пользователя {@link UserModel}, который является автором комментария

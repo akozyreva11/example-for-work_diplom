@@ -4,7 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import javax.validation.Validator;
+
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,12 @@ import ru.skypro.homework.dto.mapper.UserMapper;
 import ru.skypro.homework.model.UserModel;
 import ru.skypro.homework.service.UserService;
 
+import java.io.IOException;
+
+
+@RestController
+@CrossOrigin("http://localhost:3000")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserDetailsManager manager;
@@ -52,6 +62,7 @@ public class UserController {
     )
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword(@RequestBody NewPasswordDTO newPassword) {
+        validationUtils.validateRequest(newPassword);
         manager.changePassword(newPassword.getCurrentPassword(), newPassword.getNewPassword());
         return ResponseEntity.ok().build();
     }
@@ -76,8 +87,8 @@ public class UserController {
             }, tags = "Пользователи"
     )
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> getUser(Authentication authentication) throws Exception {
-        UserModel user = userService.findUserByUserName(authentication.getClass().getName());
+    public ResponseEntity<UserDTO> getUser(Authentication authentication) {
+        UserModel user = userService.findUserByUserName(authentication.getName());
         UserDTO userDTO = mapper.mapUserModelToUserDTO(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
@@ -99,11 +110,12 @@ public class UserController {
                             responseCode = "401",
                             description = "Unauthorized"
                     )
-            }, tags = "Пользовател"
+            }, tags = "Пользователи"
     )
     @PatchMapping("/me")
-    public ResponseEntity<UpdateUserDTO> updateUser(@RequestBody UpdateUserDTO update, Authentication authentication) throws Exception {
-        UserModel updatedUser = userService.updateUser(authentication.getClass().getName(), update);
+    public ResponseEntity<UpdateUserDTO> updateUser(@RequestBody UpdateUserDTO update, Authentication authentication) {
+        validationUtils.validateRequest(update);
+        UserModel updatedUser = userService.updateUser(authentication.getName(), update);
         UpdateUserDTO updatedUserDTO = mapper.mapUserModelToUpdateUserDTO(updatedUser);
         return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
     }
@@ -122,8 +134,9 @@ public class UserController {
             }, tags = "Пользователи"
     )
     @PatchMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/me/image")
-    public ResponseEntity<?> updateUserImage(@RequestPart("image") MultipartFile image, Authentication authentication) throws Exception {
-        userService.updateUserAvatar(authentication.getClass().getName(), image);
+    public ResponseEntity<?> updateUserImage(@RequestPart("image") MultipartFile image, @NotNull Authentication authentication) throws IOException {
+        validationUtils.validateImageFile(image);
+        userService.updateUserAvatar(authentication.getName(), image);
         return ResponseEntity.ok().build();
     }
 }

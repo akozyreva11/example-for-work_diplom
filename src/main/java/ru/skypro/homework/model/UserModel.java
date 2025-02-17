@@ -13,8 +13,7 @@ import java.util.Objects;
 /**
  * Модель для хранения и обработки сущности "пользователь"
  */
-@Getter
-@Setter
+
 @Entity
 @Table(name = "users")
 public class UserModel {
@@ -58,7 +57,7 @@ public class UserModel {
     private Role role;
     /**
      * Ссылка на эндпоинт, по которому доступна загрузка изображения - аватара пользователя. Генерируется в процессе обработки
-     * запроса на обновление аватара пользователя в методе updateUserAvatar() в сервисе {@link ru.diploma_work.demo.service.UserService}
+     * запроса на обновление аватара пользователя в методе updateUserAvatar() в сервисе {@link ru.skypro.homework.service.UserService}
      */
     private String image;
     /**
